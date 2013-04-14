@@ -18,7 +18,13 @@ class Chef::Node
   def generate_nsd3_conf_section(lines, data, prefix="\t")
     data.each do |tag, value|
       next if value.nil? # skip nil values -> support deleting a presetted value
-      lines << "#{prefix}#{tag} = #{value.to_s}"
+      if value.kind_of? TrueClass
+        lines << "#{prefix}#{tag}: yes"
+      elsif value.kind_of? FalseClass
+        lines << "#{prefix}#{tag}: no"
+      else
+        lines << "#{prefix}#{tag}: #{value.to_s}"
+      end
     end
   end
 end
