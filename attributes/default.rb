@@ -1,7 +1,7 @@
 
 default['nsd3'] = {
   "server" => {
-    #"ip-address" => "1.2.3.4",
+    #"ip-address" => ["1.2.3.4", "12fe::8ef0"],
     "hide-version" => false,
     "debug-mode" => false,
     "ip4-only" => false,
