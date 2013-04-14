@@ -17,6 +17,6 @@ file "/etc/nsd3/nsd.conf" do
 end
 
 service "nsd3" do
-  supports :status => true, :restart => true
+  supports :status => false, :restart => true
   action [:enable, :start]
 end
