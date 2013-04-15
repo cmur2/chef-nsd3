@@ -3,12 +3,17 @@ class Chef::Node
   def generate_nsd3_conf
     return nil if self['nsd3'].nil?
     lines = []
-    %w(server).each do |sectionname|
-      next if self['nsd3'][sectionname].nil?
-      lines << '' if lines.length > 0
-      lines << "#{sectionname}:"
-      generate_nsd3_conf_section lines, self['nsd3'][sectionname]
+    
+    lines << ''    
+    lines << 'server:'
+    generate_nsd3_conf_section lines, self['nsd3']['server']
+    
+    self['nsd3']['zones'].each do |zone_name,zone_data|
+      lines << ''
+      lines << 'zone:'
+      generate_nsd3_conf_section lines, {'name' => zone_name}.merge(zone_data)
     end
+    
     lines << ''
     lines.join "\n"
   end

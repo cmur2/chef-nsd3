@@ -16,6 +16,16 @@ file "/etc/nsd3/nsd.conf" do
     notifies :run, "execute[nsd-restart]"
 end
 
+node['nsd3']['zones'].each do |zone_name, data|
+  cookbook_file "/etc/nsd3/#{data['zonefile']}" do
+    source data['zonefile']
+    owner "root"
+    group "root"
+    mode 00644
+    cookbook node['nsd3']['file_cookbook'] if node['nsd3']['file_cookbook']
+  end
+end
+
 service "nsd3" do
   supports :status => false, :restart => true
   action [:enable, :start]

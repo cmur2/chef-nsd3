@@ -2,7 +2,7 @@ require 'chefspec'
 
 describe 'nsd3::default' do
   let(:chef_runner) do
-    cb_path = [Pathname.new(File.join(File.dirname(__FILE__), '..', '..')).cleanpath.to_s, 'spec/support/cookbooks']
+    cb_path = [Pathname.new(File.join(File.dirname(__FILE__), '..', '..')).cleanpath.to_s, 'spec/support/cookbooks', 'spec/support/my-cookbooks']
     ChefSpec::ChefRunner.new(:cookbook_path => cb_path)
   end
 
@@ -14,8 +14,29 @@ describe 'nsd3::default' do
     expect(chef_run).to install_package 'nsd3'
   end
   
-  it 'configures nsd' do
+  it 'configures server' do
     expect(chef_run).to create_file_with_content "/etc/nsd3/nsd.conf", "server:"
+  end
+  
+  it 'configures zones' do
+    chef_runner.node.set['nsd3']['zones'] = {
+      "example.org" => {
+        "zonefile" => "example.org.zone"
+      }
+    }
+    chef_run = chef_runner.converge 'nsd3::default'
+    expect(chef_run).to create_file_with_content "/etc/nsd3/nsd.conf", "name: example.org"
+  end
+  
+  it 'creates zone files' do
+    chef_runner.node.set['nsd3']['zones'] = {
+      "example.org" => {
+        "zonefile" => "example.org.zone"
+      }
+    }
+    chef_runner.node.set['nsd3']['file_cookbook'] = 'nsd3-files'
+    chef_run = chef_runner.converge 'nsd3::default'
+    expect(chef_run).to create_file_with_content "/etc/nsd3/example.org.zone", ""
   end
   
   it 'enables and starts ietd' do

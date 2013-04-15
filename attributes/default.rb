@@ -21,5 +21,7 @@ default['nsd3'] = {
     "username" => "nsd",
     "zonesdir" => "/etc/nsd3",
     "verbosity" => 0
+  },
+  "zones" => {
   }
 }
