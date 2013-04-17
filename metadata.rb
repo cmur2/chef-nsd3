@@ -6,4 +6,6 @@ description      "Installs NSD and does basic configuration (no zone files!)"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.1.0"
 
+suggests "logrotate" # for nsd3::logrotate
+
 supports "debian"
