@@ -23,5 +23,7 @@ default['nsd3'] = {
     "verbosity" => 0
   },
   "zones" => {
+  },
+  "keys" => {
   }
 }

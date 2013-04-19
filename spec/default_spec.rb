@@ -39,6 +39,17 @@ describe 'nsd3::default' do
     expect(chef_run).to create_file_with_content "/etc/nsd3/example.org.zone", ""
   end
   
+  it 'configures keys' do
+    chef_runner.node.set['nsd3']['keys'] = {
+      "sec_key" => {
+        "algorithm" => "hmac-md5",
+        "secret" => "\"6KM6qiKfwfEpamEq72HQdA==\""
+      }
+    }
+    chef_run = chef_runner.converge 'nsd3::default'
+    expect(chef_run).to create_file_with_content "/etc/nsd3/nsd.conf", "name: sec_key"
+  end
+  
   it 'enables and starts ietd' do
     expect(chef_run).to start_service "nsd3"
     expect(chef_run).to set_service_to_start_on_boot "nsd3"

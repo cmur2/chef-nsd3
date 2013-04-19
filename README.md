@@ -18,7 +18,7 @@ It should work on all OSes that provide a nsd3 (tested against NSD 3.2.5) packag
 
 ### default
 
-Configures NSD, rebuilds zone files and starts the service from the options found in `node["nsd3"]`. There are two major sections: `node["nsd3"]["server"]` for the server options and `node["nsd3"]["zones"]` including a hash of zone configuration entries. To specify the cookbook name where the zone files are load from use `node["nsd3"]["file_cookbook"]`.
+Configures NSD, rebuilds zone files and starts the service from the options found in `node["nsd3"]`. There are three major sections: `node["nsd3"]["server"]` for the server options, `node["nsd3"]["zones"]` including a hash of zone configuration entries and `node["nsd3"]["keys"]` with a hash of entries containing key material. To specify the cookbook name where the zone files are load from use `node["nsd3"]["file_cookbook"]`.
 
 For the server options you can specify any key listed on the man page and will be used verbatim in the configuration file. Each option value can be of several types:
 
@@ -27,7 +27,9 @@ For the server options you can specify any key listed on the man page and will b
 * `String`: The string is pasted into the file without modification. So escaping like `"/my/path with spaces/conf"` is possible.
 * `''`: Special case of the String type. Designed to ignore any presetted values and let NSD choose it's own default value.
 
-For the zones one will specify a hash containing `zone_name => zone_config` mappings where the `zone_name` directly goes as name for NSD and the `zone_config` hash is subject to the same rules as the server options. It has to contain at least the `zonefile` option as it's required by NSD. For other options see the man page.
+For the zones one will specify a hash containing `zone_name => zone_config` mappings where the `zone_name` directly goes as name for NSD and the `zone_config` hash is subject to the same rules as the server options. It has to contain at least the `zonefile` option as it's required by NSD and will be used to create the zone file from a likely namend cookbook file. For other options see the man page.
+
+Each key is representad as an entry `key_name => key_config` in the keys hash where the same rules apply as for zones.
 
 ### logrotate
 

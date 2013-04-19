@@ -14,6 +14,12 @@ class Chef::Node
       generate_nsd3_conf_section lines, {'name' => zone_name}.merge(zone_data)
     end
     
+    self['nsd3']['keys'].each do |key_name,key_data|
+      lines << ''
+      lines << 'key:'
+      generate_nsd3_conf_section lines, {'name' => key_name}.merge(key_data)
+    end
+    
     lines << ''
     lines.join "\n"
   end
