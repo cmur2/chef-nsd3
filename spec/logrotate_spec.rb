@@ -7,7 +7,7 @@ describe 'nsd3::logrotate' do
   end
 
   let(:chef_run) do
-    chef_runner.converge 'nsd3::logrotate'
+    chef_runner.converge 'logrotate', 'nsd3::logrotate'
   end
 
   it 'creates nsd3 logrotate config' do
