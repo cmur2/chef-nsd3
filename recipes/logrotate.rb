@@ -10,7 +10,7 @@ begin
 
   logrotate_app "nsd3" do
     cookbook "logrotate"
-    path log
+    path [log]
     options ["missingok", "compress", "copytruncate"]
     frequency "weekly"
     create "644 #{user} #{user}"
