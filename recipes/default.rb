@@ -17,6 +17,7 @@ file "/etc/nsd3/nsd.conf" do
 end
 
 node['nsd3']['zones'].each do |zone_name, data|
+  next if data['no_copy'] # skip creation
   cookbook_file "/etc/nsd3/#{data['zonefile']}" do
     source data['zonefile']
     owner "root"

@@ -27,7 +27,7 @@ For the server options you can specify any key listed on the man page and will b
 * `String`: The string is pasted into the file without modification. So escaping like `"/my/path with spaces/conf"` is possible.
 * `''`: Special case of the String type. Designed to ignore any presetted values and let NSD choose it's own default value.
 
-For the zones one will specify a hash containing `zone_name => zone_config` mappings where the `zone_name` directly goes as name for NSD and the `zone_config` hash is subject to the same rules as the server options. It has to contain at least the `zonefile` option as it's required by NSD and will be used to create the zone file from a likely namend cookbook file. For other options see the man page.
+For the zones one will specify a hash containing `zone_name => zone_config` mappings where the `zone_name` directly goes as name for NSD and the `zone_config` hash is subject to the same rules as the server options. It has to contain at least the `zonefile` option as it's required by NSD and will be used to create the zone file from a likely named cookbook file (only if the special option `no_copy` is not set). For other options see the man page.
 
 Each key is representad as an entry `key_name => key_config` in the keys hash where the same rules apply as for zones.
 

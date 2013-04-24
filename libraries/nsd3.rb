@@ -11,7 +11,7 @@ class Chef::Node
     self['nsd3']['zones'].each do |zone_name,zone_data|
       lines << ''
       lines << 'zone:'
-      generate_nsd3_conf_section lines, {'name' => zone_name}.merge(zone_data)
+      generate_nsd3_conf_section lines, {'name' => zone_name}.merge(zone_data.reject { |k,v| k == 'no_copy'})
     end
     
     self['nsd3']['keys'].each do |key_name,key_data|

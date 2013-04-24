@@ -39,6 +39,21 @@ describe 'nsd3::default' do
     expect(chef_run).to create_file_with_content "/etc/nsd3/example.org.zone", ""
   end
   
+  it 'creates no zone file if requested' do
+    chef_runner.node.set['nsd3']['zones'] = {
+      "example.org" => {
+        "zonefile" => "example.org.zone"
+      },
+      "example.com" => {
+        "zonefile" => "example.com.zone",
+        "no_copy" => true
+      }
+    }
+    chef_runner.node.set['nsd3']['file_cookbook'] = 'nsd3-files'
+    chef_run = chef_runner.converge 'nsd3::default'
+    expect(chef_run).to create_file_with_content "/etc/nsd3/example.org.zone", ""
+  end
+  
   it 'configures keys' do
     chef_runner.node.set['nsd3']['keys'] = {
       "sec_key" => {
