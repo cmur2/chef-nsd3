@@ -65,7 +65,7 @@ describe 'nsd3::default' do
     expect(chef_run).to create_file_with_content "/etc/nsd3/nsd.conf", "name: sec_key"
   end
   
-  it 'enables and starts ietd' do
+  it 'enables and starts nsd3' do
     expect(chef_run).to start_service "nsd3"
     expect(chef_run).to set_service_to_start_on_boot "nsd3"
   end
