@@ -52,6 +52,7 @@ describe 'nsd3::default' do
     chef_runner.node.set['nsd3']['file_cookbook'] = 'nsd3-files'
     chef_run = chef_runner.converge 'nsd3::default'
     expect(chef_run).to create_file_with_content "/etc/nsd3/example.org.zone", ""
+    expect(chef_run).not_to create_file_with_content "/etc/nsd3/example.com.zone", ""
   end
   
   it 'configures keys' do
