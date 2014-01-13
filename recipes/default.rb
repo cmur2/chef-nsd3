@@ -12,7 +12,7 @@ file "/etc/nsd3/nsd.conf" do
   content node.generate_nsd3_conf
   owner "root"
   group node['nsd3']['server']['username']
-  mode 00644
+  mode 00640
   notifies :run, "execute[nsd-restart]"
 end
 
@@ -22,7 +22,7 @@ node['nsd3']['zones'].each do |zone_name, data|
     source data['zonefile']
     owner "root"
     group node['nsd3']['server']['username']
-    mode 00644
+    mode 00640
     cookbook node['nsd3']['file_cookbook'] if node['nsd3']['file_cookbook']
     notifies :run, "execute[nsd-restart]"
   end
