@@ -22,7 +22,7 @@ node['nsd3']['zones'].each do |zone_name, data|
     source data['zonefile']
     owner "root"
     group node['nsd3']['server']['username']
-    mode 00640
+    mode (data['nsd_writeable'] ? 00660 : 00640)
     cookbook node['nsd3']['file_cookbook'] if node['nsd3']['file_cookbook']
     notifies :run, "execute[nsd-restart]"
   end
