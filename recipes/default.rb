@@ -8,6 +8,12 @@ execute "nsd-restart" do
   notifies :restart, "service[nsd3]"
 end
 
+# notify slaves after restarting the service
+execute "nsd-notify" do
+  command "nsdc notify"
+  action :nothing
+end
+
 file "/etc/nsd3/nsd.conf" do
   content node.generate_nsd3_conf
   owner "root"
@@ -31,4 +37,5 @@ end
 service "nsd3" do
   supports :status => false, :restart => true
   action [:enable, :start]
+  notifies :run, "execute[nsd-notify]"
 end
